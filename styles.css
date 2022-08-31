@@ -1,0 +1,29 @@
+/*TAG's*/
+main {
+	display: flex;
+	justify-content: space-around;
+}
+
+/*ID's*/
+#visual-container {
+
+}
+
+
+#btn-container {
+	display: flex;
+	flex-direction: column;
+}
+
+/*CLASSES*/
+.btn {
+	width: 100px;
+}
+
+.btn-active {
+	border: 2px solid #FFF5E4;
+}
+
+.obj-value {
+	color: #16213E;
+}
