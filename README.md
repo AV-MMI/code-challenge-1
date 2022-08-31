@@ -38,4 +38,4 @@ Code challenge about generating buttons dinamically in relation to an object's p
 
  - [ ] Add localstorage support.
  - [ ] CRUD.
- - [-] Basic challenge.
+ - [X] Basic challenge.
