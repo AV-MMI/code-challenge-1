@@ -5,25 +5,55 @@ main {
 }
 
 /*ID's*/
-#visual-container {
-
+#access-display {
+	max-height: 200px;
+	min-width: 200px;
+	overflow: auto;
 }
 
 
-#btn-container {
+/*CLASSES*/
+	/*utilities*/
+.colFlex {
 	display: flex;
 	flex-direction: column;
 }
 
-/*CLASSES*/
+.hFlex {
+	display: flex;
+	justify-content: space-around;
+}
+
 .btn {
-	width: 100px;
+	padding: 5px;
+}
+
+	/*button display*/
+.btn-animals {
+	margin: 5px;
+	transition: 0.3s;
 }
 
 .btn-active {
-	border: 2px solid #FFF5E4;
+	border: 2px solid #EB1D36;
+	color: #E94560;
 }
 
 .obj-value {
-	color: #16213E;
+	color: #+16213E;
+}
+
+	/*history*/
+
+.access-name {
+	margin-right: 15px;
+}
+
+.access-date {
+	color: red;
+}
+
+.obj-change {
+	color: crimson;
+	margin-right: 5px;
 }
