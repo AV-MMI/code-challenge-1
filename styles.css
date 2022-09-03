@@ -4,7 +4,15 @@ main {
 	justify-content: space-around;
 }
 
+ul {
+	list-style: none;
+}
+
 /*ID's*/
+#btn-container {
+	min-width: 200px;
+}
+
 #access-display {
 	max-height: 200px;
 	min-width: 200px;
@@ -17,6 +25,7 @@ main {
 .colFlex {
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 }
 
 .hFlex {
@@ -24,11 +33,46 @@ main {
 	justify-content: space-around;
 }
 
+
 .btn {
 	padding: 5px;
+	min-width: 30px;
+}
+
+	/*add animal*/
+.add-animal-container {
+	position: absolute;
+	top: 30%;
+	right: 45%;
+	border: 1px solid gray;
+	border-radius: 3px;
+	max-width: 300px;
+}
+
+.close-btn {
+	position: relative;
+	top: 5%;
+	left: 65%;
+	color: red;
+}
+
+.add-animal-form {
+	padding: 30px;
+}
+
+.required-input::after {
+	content: '*';
+	color: teal;
 }
 
 	/*button display*/
+.animals-btn-container{
+	width: 100%;
+	margin: 5px;
+	display: flex;
+	justify-content: space-evenly;
+}
+
 .btn-animals {
 	margin: 5px;
 	transition: 0.3s;
@@ -40,7 +84,7 @@ main {
 }
 
 .obj-value {
-	color: #+16213E;
+	color: #16213E;
 }
 
 	/*history*/

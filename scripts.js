@@ -31,6 +31,7 @@ const history = {
 };
 
 const btnContainer = document.getElementById('btn-container');
+const addAnimalBtn = document.getElementById('add-animal')
 const display = document.getElementById('display');
 
 const isPetVal = document.getElementById('isPet-val');
@@ -39,10 +40,12 @@ const nameVal = document.getElementById('name-val');
 
 const accessDisplay = document.getElementById('access-display');
 
+addAnimalBtn.addEventListener('click', addAnimal);
+
 
 	/*
 	* FUNCTIONS
-	* Creates an access items which is contained inside a div.
+	* Creates an access item which is contained inside a div.
 	*/
 	function createAccessItem(name, msg="accessed"){
 		let date = new Date();
@@ -94,12 +97,123 @@ const accessDisplay = document.getElementById('access-display');
 		}
 	}
 
+	/*
+	* EVENT HANDLER
+	*/
+	function addAnimal(event){
+			// Elements declaration
+		let divCont = document.createElement('div');
+		let closeBtn = document.createElement('button');
 
-	// EVENT HANDLER
+		let form = document.createElement('form');
+		let ul = document.createElement('ul');
+
+		let isPetLi = document.createElement('li');
+		let isPetUl = document.createElement('ul');
+		let isPetTrueLi = document.createElement('li');
+		let isPetFalseLi = document.createElement('li');
+
+		let isPetTrueLabel = document.createElement('label');
+		let isPetTrueInput = document.createElement('input');
+
+		let isPetFalseLabel = document.createElement('label');
+		let isPetFalseInput = document.createElement('input');
+
+		let typeLi = document.createElement('li');
+		let typeLabel = document.createElement('label');
+		let typeInput = document.createElement('input');
+
+		let nameLi = document.createElement('li');
+		let nameLabel = document.createElement('label');
+		let nameInput = document.createElement('input');
+
+		let submitBtn = document.createElement('button');
+
+
+			// Add content/classes/types
+		divCont.classList.add('add-animal-container');
+		closeBtn.classList.add('btn', 'close-btn');
+		closeBtn.textContent = "X";
+
+		form.classList.add('add-animal-form');
+
+		isPetLi.textContent = 'It is a pet'
+		isPetTrueLabel.textContent = 'true';
+		isPetTrueLabel.setAttribute('for', 'true-input');
+		isPetTrueInput.setAttribute('id', 'true-input');
+		isPetTrueInput.setAttribute('name', 'isPetInputs')
+		isPetTrueInput.setAttribute('type', 'radio');
+
+		isPetFalseLabel.textContent = 'false';
+		isPetFalseLabel.setAttribute('for', 'false-input');
+		isPetFalseInput.setAttribute('id', 'false-input');
+		isPetFalseInput.setAttribute('name', 'isPetInputs')
+		isPetFalseInput.setAttribute('type', 'radio');
+		isPetFalseInput.setAttribute('checked', '');
+
+		typeLabel.textContent = 'Animal type: ';
+		typeLabel.classList.add('required-input');
+		typeLabel.setAttribute('for', 'type-input');
+		typeInput.setAttribute('id', 'type-input');
+		typeInput.setAttribute('type', 'text');
+		typeInput.setAttribute('placeholder', 'type of animal?')
+		typeInput.setAttribute('required', '');
+
+		nameLabel.textContent = 'Animal name: ';
+		nameLabel.classList.add('required-input');
+		nameLabel.setAttribute('for', 'name-input');
+		nameInput.setAttribute('id', 'name-input');
+		nameInput.setAttribute('type', 'text');
+		nameInput.setAttribute('placeholder', 'name of animal')
+		nameInput.setAttribute('required', '');
+
+		submitBtn.textContent = 'Create new animal';
+		submitBtn.setAttribute('type', 'button');
+
+			// Add EventListeners
+		closeBtn.addEventListener('click', closeAddAnimal);
+
+			// Append Elements
+		divCont.appendChild(closeBtn);
+
+		form.appendChild(ul);
+		form.appendChild(submitBtn);
+
+		ul.appendChild(isPetLi);
+		isPetLi.appendChild(isPetUl);
+		isPetUl.appendChild(isPetTrueLi);
+		isPetUl.appendChild(isPetFalseLi);
+
+		isPetTrueLi.appendChild(isPetTrueLabel);
+		isPetTrueLi.appendChild(isPetTrueInput);
+
+		isPetFalseLi.appendChild(isPetFalseLabel);
+		isPetFalseLi.appendChild(isPetFalseInput);
+
+		ul.appendChild(typeLi);
+		typeLi.appendChild(typeLabel);
+		typeLi.appendChild(typeInput);
+
+		ul.appendChild(nameLi);
+		nameLi.appendChild(nameLabel);
+		nameLi.appendChild(nameInput)
+
+		btnContainer.appendChild(divCont);
+		divCont.appendChild(form);
+	}
+
+	/*
+	* EVENT HANDLER
+	*/
+
+	function closeAddAnimal(){
+
+	}
+
 	/*
 	* FUNCTION
-	* Creates a nodeList which contains all the buttons with the animals-btn class
-	* Its purposes is displaying an indicator in the button that is currently
+	* Creates a nodeList which contains all the buttons with the animals-btn class.
+	* Display an indicator in the button that is currently
 	* displaying its property.
 	*/
 	function clickedButton(){
@@ -123,14 +237,17 @@ const accessDisplay = document.getElementById('access-display');
 		// the use of the element id is temporal.
 		// later we are gonna refer to it by the name,
 		// so we can edit or remove such element without
-		// affecting all the others.
-		let idx = event.target.id;
+		// affecting all the rest.
 
-		isPetVal.textContent = animals[idx]["isPet"];
-		typeVal.textContent = animals[idx]["type"];
-		nameVal.textContent = animals[idx]["name"];
+		for(let i = 0; i < animals.length; i++){
+			if(animals[i]['name'] == event.target.textContent){
+				isPetVal.textContent = animals[i]["isPet"];
+				typeVal.textContent = animals[i]["type"];
+				nameVal.textContent = animals[i]["name"];
 
-		displayAccess(accessDisplay, nameVal.textContent, [], "accessed");
+				displayAccess(accessDisplay, animals[i]['name'], [], "accessed");
+			}
+		}
 
 		clickedButton();
 		event.target.classList.add('btn-active');
@@ -139,7 +256,7 @@ const accessDisplay = document.getElementById('access-display');
 	/*
 	* EVENT HANDLER
 	* It is activated everytime a remove-btn is clicked.
-	* It removes both the DOM node and the corresponding arr's obj.
+	* removes both the DOM node and the corresponding arr's obj.
 	*/
 
 	function removeAnimal(event) {
@@ -157,7 +274,7 @@ const accessDisplay = document.getElementById('access-display');
 					animals = animals.splice(0, animals.length-1);
 				}
 				else {
-					animals = animals.splice(0, i).concat( animals.splice(i, animals.length-1) );
+					animals = animals.splice(0, i).concat( animals.splice(i-1, animals.length) );
 				}
 			}
 		}
@@ -168,69 +285,121 @@ const accessDisplay = document.getElementById('access-display');
 	/*
 	* EVENT HANDLER
 	* Activate by the submit btn that appears when the user
-	* clicks the reset-btn;
+	* clicks the reset-btn. Looks through the animals arr looking
+	* in each object checking their names and comparing it with the
+	* new name entered by the user. If a match is found it will alert
+	* the user. Also creates a series of input elements to obtain the
+	*
 	*/
-	function resetNAssign(event){
+	function assignNReset(event){
+
+			//Check if the element name is unique.
+			for(let i = 0; i < animals.length; i++){
+				if(animals[i]['name'] == nameInput.value){
+					nameInput.style.border = "2px solid red";
+					alert(`ERROR: ${nameInput.value} already exist`);
+					nameInput.value = "";
+					return;
+				}
+			}
 
 			for(let i = 0; i < animals.length; i++){
+				if(animals[i]['name'] == modifiedEl){
+					boolVal = (inputTrue.checked == true) ? true : false;
 
-				if(animals[i]['name'] == edditedObj['modified']){
-
-					animals[i]['isPet'] = edditedObj['bool'];
-					animals[i]['name'] = edditedObj['name'];
-					animals[i]['type'] = edditedObj['type'];
+					animals[i]['isPet'] = boolVal;
+					animals[i]['name'] = nameInput.value;
+					animals[i]['type'] = typeInput.value;
 
 					isPetVal.textContent = animals[i]["isPet"];
 					typeVal.textContent = animals[i]["type"];
 					nameVal.textContent = animals[i]["name"];
+
+					typeInput.value = "";
+					nameInput.value = "";
+					submitBtn.value = "";
+
+					ulParent.remove();
+					typeInput.remove();
+					nameInput.remove();
+					submitBtn.remove();
+
+					let btnContainer = document.getElementById(modifiedEl);
+					let animalBtn = btnContainer.childNodes[1];
+
+					btnContainer.setAttribute('id', animals[i]['name']);
+					animalBtn.textContent = animals[i]['name'];
+
+					displayAccess(accessDisplay, animals[i]['name'], [], `${modifiedEl} modified to: `);
 				}
 			}
-		
-		boolInput.remove();
-		typeInput.remove();
-		nameInput.remove();
-		submitBtn.remove();
 	}
 
 
-	let edditedObj = {
+	let modified;
 
-	}
+	let ulParent = document.createElement('ul');
+	let liTrue = document.createElement('li');
+	let liFalse = document.createElement('li');
 
-	let boolInput = document.createElement('input');
+	let labelTrue = document.createElement('label');
+	let labelFalse = document.createElement('label');
+
+	let inputTrue = document.createElement('input');
+	let inputFalse = document.createElement('input');
+
+	let boolVal;
+
 	let typeInput = document.createElement('input');
 	let nameInput = document.createElement('input');
 	let submitBtn = document.createElement('button');
 
 	function editAnimal(event){
-		let modifiedEl = event.target.parentElement.id;
+		modifiedEl = event.target.parentElement.id;
 
-		boolInput.placeholder = "insert new isPet";
+		labelTrue.setAttribute('for', 'true');
+		labelFalse.setAttribute('for', 'false');
+		labelTrue.textContent = 'true';
+		labelFalse.textContent = 'false';
+
+		inputTrue.setAttribute('type', 'radio');
+		inputFalse.setAttribute('type', 'radio');
+		inputFalse.setAttribute('checked', '');
+
+		inputTrue.setAttribute('id', 'true');
+		inputFalse.setAttribute('id', 'false');
+		inputTrue.setAttribute('name', 'bool');
+		inputFalse.setAttribute('name', 'bool');
+
 		typeInput.placeholder = "insert new type";
 		nameInput.placeholder = "insert new name";
 		submitBtn.textContent = "submit";
 
-		boolInput.type = "text";
 		typeInput.type = "text";
 		nameInput.type = "text";
 		submitBtn.type = "button";
 
-		boolInput.setAttribute("required", "");
 		typeInput.setAttribute("required", "");
 		nameInput.setAttribute("required", "");
 
-		isPetVal.appendChild(boolInput);
+		ulParent.appendChild(liTrue);
+		ulParent.appendChild(liFalse);
+
+		liTrue.appendChild(labelTrue);
+		liTrue.appendChild(inputTrue);
+
+		liFalse.appendChild(labelFalse);
+		liFalse.appendChild(inputFalse);
+
+		isPetVal.textContent = "";
+		typeVal.textContent = "";
+		nameVal.textContent = "";
+
+		isPetVal.appendChild(ulParent);
 		typeVal.appendChild(typeInput);
 		nameVal.appendChild(nameInput);
 
-		edditedObj = {
-			bool: boolInput.value,
-			type: typeInput.value,
-			name: nameInput.value,
-			modified: modifiedEl,
-		}
-
-		submitBtn.addEventListener("click", resetNAssign);
+		submitBtn.addEventListener("click", assignNReset);
 
 		display.appendChild(submitBtn);
 	}
@@ -242,18 +411,19 @@ const accessDisplay = document.getElementById('access-display');
 		let removeBtn = document.createElement('button');
 
 		container.setAttribute("id", text);
+		container.classList.add('animals-btn-container')
 
 		editBtn.textContent = "edit";
-		editBtn.setAttribute("class", "btn btn-edit center");
+		editBtn.classList.add("btn", "btn-edit");
 		editBtn.addEventListener("click", editAnimal);
 
 		animalsBtn.textContent = text;
 		animalsBtn.setAttribute("id", idNum);
-		animalsBtn.setAttribute("class", "btn btn-animals");
+		animalsBtn.classList.add("btn", "btn-animals");
 		animalsBtn.addEventListener("click", displayInfo);
 
 		removeBtn.textContent = "X";
-		removeBtn.setAttribute("class", "btn btn-remove center");
+		removeBtn.classList.add("btn", "btn-remove");
 		removeBtn.addEventListener("click", removeAnimal);
 
 		container.appendChild(editBtn);
